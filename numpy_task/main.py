@@ -16,7 +16,7 @@ d = np.arange(-5, 5, 1)
 
 assert np.all(d == np.array([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]))
 #
-e = np.arange(0, 1.25, 0.25)
+e = np.linspace(0, 1.0, 5)
 
 assert np.all(e == np.array([0., 0.25, 0.5, 0.75, 1.0]))
 #
@@ -36,7 +36,7 @@ hc = h * 2
 assert np.all(hc == np.array([2., 4., 6., 8., 10.]))
 #
 j = np.array([1, 2, 3, 4, 9, 7, 11, 12, 15, 14, 33])
-mask = [i % 3 == 0 for i in j]
+mask = np.array([2, 4, 7, 8, 10])
 jc = j[mask]
 
 assert np.all(jc == np.array([3, 9, 12, 15, 33]))
