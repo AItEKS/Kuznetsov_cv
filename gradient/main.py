@@ -9,6 +9,7 @@ def lerp(v0, v1, t):
 size = 100
 image = np.zeros((size, size, 3), dtype="uint8")
 assert image.shape[0] == image.shape[1]
+
 color1 = np.array([255, 128, 0])
 color2 = np.array([0, 128, 255])
 
