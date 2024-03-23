@@ -7,25 +7,6 @@ def neighbours8(y, x):
     return (y, x - 1), (y - 1, x), (y, x + 1), (y + 1, x), (y - 1, x - 1), (y - 1, x + 1), (y + 1, x - 1), (y + 1, x + 1)
 
 
-def get_boundaries(LB, label=1):
-    pos = np.where(LB == label)
-    bounds = []
-    for y, x in zip(*pos):
-        for yn, xn in neighbours8(y, x):
-            if yn < 0 or xn < 0 or yn >= LB.shape[0] or xn >= LB.shape[1] or LB[yn, xn] == 0:
-                bounds.append((y, x))
-                break
-    return bounds
-
-
-def get_shape(bounds):
-    y_min, x_min = bounds[0][0], bounds[0][1]
-    LB = np.zeros((6, 6))
-    for y, x in bounds:
-        LB[y - y_min, x - x_min] = 1
-    return LB
-
-
 image = np.load("ps.npy.txt")
 
 type_1 = np.array([[1, 1, 1, 1, 1, 1],
