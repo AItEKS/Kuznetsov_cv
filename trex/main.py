@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import time
 import math
+import matplotlib.pyplot as plt
 
 
 def get_pixel(image, x, y):
@@ -14,16 +15,18 @@ def get_pixel(image, x, y):
 
 
 def start():
-    x, y, width, height = 710, 180, 1260, 350
+    x, y, width, height = 710, 180, 550, 350
     jumping_time = 0
     last_jumping_time = 0
     last_interval_time = 0
 
     x_start, x_end = 80, 90
-    y_search1, y_search2 = 135, 138
-    y_search_for_bird = 101
+    y_search1, y_search2 = 132, 138
+    y_search_for_bird = 102
 
     time.sleep(3)
+    keyboard.press('up')
+    keyboard.release('up')
 
     while not keyboard.is_pressed('q'):
         screenshot = np.array(gui.screenshot(region=(x, y, width, height)))
@@ -35,10 +38,12 @@ def start():
             if np.any(screenshot[y_search1, i] != bg_color) or np.any(screenshot[y_search2, i] != bg_color):
                 keyboard.press('up')
                 jumping_time = time.time()
+                # plt.imshow(screenshot)
+                # plt.show()
                 break
             if np.any(screenshot[y_search_for_bird, i] != bg_color):
                 keyboard.press("down")
-                time.sleep(0.4)
+                time.sleep(0.5)
                 keyboard.release("down")
                 break
 

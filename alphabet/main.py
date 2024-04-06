@@ -1,4 +1,4 @@
- import numpy as np
+import numpy as np
 from skimage.measure import regionprops
 import matplotlib.pyplot as plt
 from skimage.measure import label

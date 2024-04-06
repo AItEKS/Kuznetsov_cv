@@ -6,7 +6,6 @@ general_count = 0
 for i in range(1, 13):
     img = cv2.imread(f"images/img ({i}).jpg")
     image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    image = cv2.GaussianBlur(image, (7, 7), 0)
     _, thresh = cv2.threshold(image, 120, 255, 0)
     contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
