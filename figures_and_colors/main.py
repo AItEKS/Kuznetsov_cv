@@ -2,32 +2,9 @@ import cv2
 import numpy as np
 from collections import defaultdict
 
-def get_shades(img):
-    c = np.unique(img[:, :])
-    colors = []
-    e = np.diff(c).mean()
-    prev_color = -1
-    a = []
-
-    for i in c:
-        if prev_color == -1:
-            a.append(i)
-        elif np.abs(i - prev_color) >= e:
-            mean = np.mean(a)
-            if mean != 0.0:
-                colors.append(mean)
-            a = [i]
-        else:
-            a.append(i)
-        prev_color = i
-
-    colors.append(np.mean(a))
-    return colors
-
 
 img = cv2.imread('balls_and_rects.png', cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-shades = get_shades(gray)
 gray_blurred = cv2.blur(gray, (2, 2))
 
 detected_circles = cv2.HoughCircles(gray_blurred, cv2.HOUGH_GRADIENT, 1, 20, param1=50, param2=13, minRadius=1, maxRadius=50)
@@ -46,9 +23,7 @@ if detected_circles is not None:
         hsv_img = cv2.cvtColor(mask, cv2.COLOR_BGR2HSV)
         object_color_hsv = np.mean(hsv_img, axis=(0, 1))
         hue = object_color_hsv[0]
-        for i in shades:
-            if i == hue:
-                circle_shades[i] += 1
+        circle_shades[hue] += 1
 
         cv2.circle(img, (a, b), r, (0, 255, 0), 2)
         cv2.circle(img, (a, b), 1, (0, 0, 255), 1)
@@ -84,9 +59,8 @@ for contour in contours:
         hsv_img = cv2.cvtColor(mask, cv2.COLOR_BGR2HSV)
         object_color_hsv = np.mean(hsv_img, axis=(0, 1))
         hue = object_color_hsv[0]
-        for i in shades:
-            if i == hue:
-                rectangle_shades[i] += 1
+
+        rectangle_shades[hue] += 1
 
         cv2.drawContours(img, [approx], 0, (255, 0, 0), 1)
 
