@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 from collections import defaultdict
 
-
 img = cv2.imread('balls_and_rects.png', cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 gray_blurred = cv2.blur(gray, (2, 2))
@@ -20,10 +19,8 @@ if detected_circles is not None:
         mask = np.zeros_like(img)
         cv2.circle(mask, (a, b), r, (255, 255, 255), -1)
 
-        hsv_img = cv2.cvtColor(mask, cv2.COLOR_BGR2HSV)
-        object_color_hsv = np.mean(hsv_img, axis=(0, 1))
-        hue = object_color_hsv[0]
-        circle_shades[hue] += 1
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        circle_shades[hsv[b, a, 0]] += 1
 
         cv2.circle(img, (a, b), r, (0, 255, 0), 2)
         cv2.circle(img, (a, b), 1, (0, 0, 255), 1)
@@ -56,11 +53,8 @@ for contour in contours:
         mask_single_channel = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
         moments = cv2.moments(mask_single_channel)
         a, b = int(moments['m10'] / moments['m00']), int(moments['m01'] / moments['m00'])
-        hsv_img = cv2.cvtColor(mask, cv2.COLOR_BGR2HSV)
-        object_color_hsv = np.mean(hsv_img, axis=(0, 1))
-        hue = object_color_hsv[0]
-
-        rectangle_shades[hue] += 1
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        rectangle_shades[hsv[b, a, 0]] += 1
 
         cv2.drawContours(img, [approx], 0, (255, 0, 0), 1)
 
