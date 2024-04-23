@@ -30,3 +30,5 @@ while True:
 
 capture.release()
 print(my_image)
+
+# Ответ: 46
