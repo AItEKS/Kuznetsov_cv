@@ -75,5 +75,4 @@ def start():
             keyboard.release('up')
 
 
-
 start()
